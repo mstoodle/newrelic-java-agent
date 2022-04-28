@@ -1,21 +1,21 @@
-name: AITs - Datastores (1 disabled)
+name: AITs - R2DBC Datastores
 # We need to set java home to JDK 8
 # Also configure workflow_dispatch fr all workflows - add github ref
 # Force build
 
 on:
   pull_request:
-    branches: [ main ] ## branches TBD
+    branches: [ r2dbc-workflow ] ## branches TBD
     types: [opened, synchronize, reopened] ## Types TBD
   push:
-    branches: [ main ]
+    branches: [ r2dbc-workflow ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
       BRANCH:
-        description: "Specify branch (main is default)"
+        description: "Specify branch (r2dbc is default)"
         required: false
-        default: 'main'
+        default: 'r2dbc-workflow'
 
 jobs:
   tests:
@@ -26,17 +26,14 @@ jobs:
     env:
       java_func_path: "tests/java/functionality"
       java_func_type: "datastore"
-      default-branch: "gha"
+      default-branch: "r2dbc"
     strategy:
       ##max-parallel: 1 ## used to force sequential
       fail-fast: false
       matrix:
         # functional_path: [basic_features, datastore]
         func_tests:
-          - datastore_base.py
-#          - datastores.py
-          - jcache.py
-          - redis.py
+          - r2dbc.py
     steps:
       - uses: actions/checkout@v2
 
