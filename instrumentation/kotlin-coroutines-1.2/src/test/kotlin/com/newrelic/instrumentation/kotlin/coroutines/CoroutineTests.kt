@@ -4,6 +4,7 @@ import com.newrelic.agent.introspec.InstrumentationTestConfig
 import com.newrelic.agent.introspec.InstrumentationTestRunner
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -12,14 +13,17 @@ import org.junit.runner.RunWith
 class CoroutineTests {
 
     val cut = CoroutineClass()
-
     @Test
     fun testIt() {
+        val introspector = InstrumentationTestRunner.getIntrospector()
+
         runBlocking {
             val i = 42
             assertTrue(i == 42)
             cut.runIt()
         }
+//        Assert.assertEquals(1, introspector.getFinishedTransactionCount(3000).toLong())
+        Assert.assertTrue(introspector.transactionNames.contains("OtherTransaction/Spring/ (GET)"))
     }
 }
 

@@ -1,10 +1,12 @@
 package com.newrelic.instrumentation.kotlin.coroutines
 
+import com.newrelic.api.agent.Trace
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CoroutineClass {
+    @Trace(async = true)
     suspend fun runIt()  {
             delay(1000L) // non-blocking delay for 1 second (default time unit is ms)
             println("World!") // print after delay
