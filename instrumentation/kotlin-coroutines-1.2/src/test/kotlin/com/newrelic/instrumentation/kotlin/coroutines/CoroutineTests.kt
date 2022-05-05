@@ -16,12 +16,7 @@ class CoroutineTests {
     @Test
     fun testIt() {
         val introspector = InstrumentationTestRunner.getIntrospector()
-
-        runBlocking {
-            val i = 42
-            assertTrue(i == 42)
-            cut.runIt()
-        }
+        cut.runIt()
 //        Assert.assertEquals(1, introspector.getFinishedTransactionCount(3000).toLong())
         Assert.assertTrue(introspector.transactionNames.contains("OtherTransaction/Spring/ (GET)"))
     }
