@@ -3,7 +3,7 @@ name: Kotlin Coroutine Instrumentation Tests
 on:
   push:
     branches:
-      - tcrone/kotlin-coroutine-instrumentation-tests
+      - tcrone/kotlin-coroutine-spike
 jobs:
   tests:
     name: Java ${{ matrix.java-version }} Instrumentation Tests
