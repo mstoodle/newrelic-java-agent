@@ -131,22 +131,20 @@ public class BootstrapAgent {
     }
 
     private static void checkAndApplyIBMLibertyProfileLogManagerWorkaround() {
-        if (IBMUtils.isIbmJVM()) {
-            String javaClassPath = System.getProperty("java.class.path");
-            // WS_SERVER_JAR is characteristic of a Liberty Profile installation
-            if (javaClassPath != null && javaClassPath.contains(WS_SERVER_JAR)) {
-                if (System.getProperty(JAVA_LOG_MANAGER) == null) {
-                    try {
-                        // Check for the existence of WsLogManager (without initializing it)
-                        // before attempting the logging manager workaround
-                        Class.forName(WS_LOG_MANAGER, false, BootstrapAgent.class.getClassLoader());
+        String javaClassPath = System.getProperty("java.class.path");
+        // WS_SERVER_JAR is characteristic of a Liberty Profile installation
+        if (javaClassPath != null && javaClassPath.contains(WS_SERVER_JAR)) {
+            if (System.getProperty(JAVA_LOG_MANAGER) == null) {
+                try {
+                    // Check for the existence of WsLogManager (without initializing it)
+                    // before attempting the logging manager workaround
+                    Class.forName(WS_LOG_MANAGER, false, BootstrapAgent.class.getClassLoader());
 
-                        // This property is used in java.util.logging.LogManager during initialization
-                        // and allows us to properly set the logger hierarchy for Liberty Profile.
-                        System.setProperty(JAVA_LOG_MANAGER, WS_LOG_MANAGER);
-                    } catch (Exception e) {
-                        // WSLogManager was not found, this must not be Liberty
-                    }
+                    // This property is used in java.util.logging.LogManager during initialization
+                    // and allows us to properly set the logger hierarchy for Liberty Profile.
+                    System.setProperty(JAVA_LOG_MANAGER, WS_LOG_MANAGER);
+                } catch (Exception e) {
+                    // WSLogManager was not found, this must not be Liberty
                 }
             }
         }
