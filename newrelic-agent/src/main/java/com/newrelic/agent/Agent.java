@@ -109,9 +109,6 @@ public final class Agent {
     @SuppressWarnings("unused")
     public static void continuePremain(String agentArgs, Instrumentation inst, long startTime) {
         final LifecycleObserver lifecycleObserver = LifecycleObserver.createLifecycleObserver(agentArgs);
-        if (!lifecycleObserver.isAgentSafe()) {
-            return;
-        }
         // This *MUST* be done first thing in the premain
         addMixinInterfacesToBootstrap(inst);
 

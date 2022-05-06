@@ -62,17 +62,6 @@ public class LifecycleObserver {
             this.id = args.getId();
         }
 
-        public boolean isAgentSafe() {
-            if (IBMUtils.isIbmJVM() && 
-                    !Boolean.parseBoolean(SystemPropertyFactory.getSystemPropertyProvider()
-                            .getSystemProperty(BootstrapAgent.TRY_IBM_ATTACH_SYSTEM_PROPERTY))) {
-                writeMessage(StatusMessage.error(id, "Error",
-                        "The agent attach feature is not supported for IBM JVMs"));
-                return false;
-            }
-            return true;
-        }
-
         /**
          * Busy waits until the agent establishes a connection with New Relic.
          *
